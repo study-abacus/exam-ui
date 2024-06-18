@@ -4,15 +4,16 @@ import React from 'react'
 type Props = {
     id: string
     label: string
+    className?: string
 }
 
-export const TextInput: React.FC<Props> = ({ id, label }) => {
+export const TextInput: React.FC<Props> = ({ id, label, className }) => {
     return (
         <div className="relative">
             <input
                 type="email"
                 id={id}
-                className="peer p-4 block w-full border-gray-200 rounded-lg
+                className={`peer p-4 block w-full border-gray-200 rounded-lg
                 text-sm placeholder:text-transparent focus:border-blue-500
                 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
                 focus:pt-6
@@ -20,9 +21,9 @@ export const TextInput: React.FC<Props> = ({ id, label }) => {
                 [&:not(:placeholder-shown)]:pt-6
                 [&:not(:placeholder-shown)]:pb-2
                 autofill:pt-6
-                autofill:pb-2" placeholder="you@email.com" />
+                autofill:pb-2 ${className}`} placeholder="you@email.com" />
             <label
-                for={id}
+                htmlFor={id}
                 className="absolute top-0 start-0 p-4 h-full text-sm
                 truncate pointer-events-none transition ease-in-out
                 duration-100 border border-transparent  origin-[0_0]
