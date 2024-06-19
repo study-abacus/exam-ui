@@ -47,13 +47,16 @@ jobs:
       with:
         name: build
 
+    - name: Build the app
+      run: tree
+
     - name: Copy build to server
       uses: appleboy/scp-action@v0.1.7
       with:
         key: ${{ secrets.SSH_KEY }}
         username: studyabacus
         host: ${{ secrets.SRV2_HOST }}
-        source: ${{ vars.GITHUB_WORKSPACE }}/dist/"
+        source: dist/
         target: "/home/studyabacus/frontends/exam-ui"
   
 
