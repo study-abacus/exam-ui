@@ -18,9 +18,9 @@ jobs:
 
     # write github action to build a react project with setup node
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '21'
 
     - name: Install dependencies
       run: npm install
