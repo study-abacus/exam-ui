@@ -59,5 +59,6 @@ jobs:
         host: ${{ secrets.SRV2_HOST }}
         source: dist/
         target: "/home/studyabacus/frontends/exam-ui"
+        strip_components: 1
   
 
