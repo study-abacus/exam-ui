@@ -6,6 +6,8 @@ export const getOrderPrice = (championshipId: number, examinationIds: number[]) 
   useQuery(["orderPrice", championshipId, examinationIds], async () => {
     const response = await client.post("api/v1/order/calculate/", { championship_id: championshipId, examination_ids: examinationIds });
     return response.data;
+  }, {
+    enabled: championshipId && examinationIds.length > 0 
   })
 
 

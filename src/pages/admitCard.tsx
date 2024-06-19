@@ -5,7 +5,7 @@ import { ProfileEditor } from '~/components/admitCard/profileEditor'
 export const Component: React.FC = () => {
     return (
         <div className="container mx-auto py-4">
-            <div className="flex flex-row">
+            <div className="flex flex-col md:flex-row">
                 <div className="mx-5 relative flex flex-col mt-6  basis-1/2">
                     <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
                         <div className="text-3xl text-center">

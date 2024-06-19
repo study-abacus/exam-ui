@@ -4,15 +4,20 @@ import React from 'react'
 type Props = {
     id: string
     label: string
+    type?: string
     className?: string
+    value?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const TextInput: React.FC<Props> = ({ id, label, className }) => {
+export const TextInput: React.FC<Props> = ({ id, label, type = "text", className, value, onChange }) => {
     return (
         <div className="relative">
             <input
-                type="email"
+                type={type}
                 id={id}
+                value={value}
+                onChange={onChange}
                 className={`peer p-4 block w-full border-gray-200 rounded-lg
                 text-sm placeholder:text-transparent focus:border-blue-500
                 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none

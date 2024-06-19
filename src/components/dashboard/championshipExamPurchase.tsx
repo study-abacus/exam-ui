@@ -65,7 +65,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
 
     return (
         <>
-            <div className="flex flex-row mt-4">
+            <div className="flex flex-col md:flex-row mt-4">
                 {loadingExaminations ? (
                     <div className="justify-center">
                         <Loading />
@@ -84,7 +84,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                             />
                         </form>
                     </div>
-                    <div className="mx-5 relative flex flex-col mt-6  md:basis-1/2">
+                    <div className="mx-5 relative flex flex-col mt-6 md:basis-1/2">
                         <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
                             <div className="text-center">
                                 {order && selectedExams.length > 0 ? (

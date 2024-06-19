@@ -3,43 +3,44 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useLocalStorage } from 'usehooks-ts'
 
 const AuthContext = createContext<AuthContextType>({
-  admitCard: null,
+  data: {},
   isAuthenticated: false,
   login: () => {},
   logout: () => {},
 });
 
 export type AuthContextType = {
-  admitCard: any;
+  data: any;
   isAuthenticated: boolean;
   login: (data: any) => void;
   logout: () => void;
 };
 
 export const AuthProvider: React.FC = () => {
-  const [admitCard, setAdmitCard] = useLocalStorage("admitCard", null);
+  const [authData, setAuthData] = useLocalStorage<{token?: string}>("auth", {});
   const navigate = useNavigate();
 
   // call this function when you want to authenticate the admitCard
-  const login = async (data) => {
-    setAdmitCard(data);
-    navigate("/admit_card");
+  const login = async (token) => {
+    setAuthData({
+      token,
+    });
   };
 
   // call this function to sign out logged in admitCard
   const logout = () => {
-    setAdmitCard(null);
+    setAuthData({});
     navigate("/", { replace: true });
   };
 
   const value = useMemo(
     () => ({
-      admitCard,
-      isAuthenticated: !!admitCard,
+      data: authData,
+      isAuthenticated: !!authData?.token,
       login,
       logout,
     }),
-    [admitCard]
+    [authData]
   );
   return (
     <AuthContext.Provider
