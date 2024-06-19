@@ -2,6 +2,6 @@ import axios from 'axios'
 
 
 export const client = axios.create({
-  baseURL: "http://localhost:8001/"
+  baseURL: import.meta.env.API_BASE_URL,
 })
 
