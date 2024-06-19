@@ -32,7 +32,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     "currency": "INR",
                     "name": "Study Abacus", //your business name
                     "description": "Test Transaction",
-                    "image": "https://example.com/your_logo",
+                    "image": "https://studyabacus.com/admin/assets/images/logo/1684778226Abacus.png",
                     "order_id": result.order_id,
                     "handler": response => {
                         resolve(response)
@@ -72,7 +72,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     </div>
                 ) : (
                 <>
-                    <div className="basis-1/2">
+                    <div className="md:basis-1/2">
                         <form className="max-w-sm mx-auto">
                             <label htmlFor="countries" className="block mb-2 font-medium text-gray-900">Select Examinations</label>
                             <Select
@@ -84,7 +84,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                             />
                         </form>
                     </div>
-                    <div className="mx-5 relative flex flex-col mt-6  basis-1/2">
+                    <div className="mx-5 relative flex flex-col mt-6  md:basis-1/2">
                         <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
                             <div className="text-center">
                                 {order && selectedExams.length > 0 ? (

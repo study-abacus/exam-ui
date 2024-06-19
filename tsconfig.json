@@ -10,7 +10,7 @@
     "paths": {
       "~/*": ["*"]
     },
-    "types": ["vite/client"],
+    "types": ["node", "vite/client"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
