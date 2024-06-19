@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import Select from 'react-select'
 import { useMutation } from 'react-query'
-import { useAuth } from '~/hooks/useAuth'
 import { listExaminations } from '~/api/endpoints/examinations'
 import { getOrderPrice, createOrder, captureOrder } from '~/api/endpoints/orders'
 import { Loading } from '~/components/loading'
@@ -14,7 +13,6 @@ type Props = {
 
 export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
     const [ selectedExams, setSelectedExams ] = React.useState([])
-    const { login } = useAuth()
 
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
     const { data: order } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
@@ -27,7 +25,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 championshipId: competition.id,
                 examinationIds: selectedExams.map((exam: any) => exam.value)
             })
-            const razpResult = await new Promise((resolve, reject) => {
+            const razpResult: any = await new Promise((resolve, reject) => {
                 const options = {
                     "key": "rzp_test_q818zEKBeaYNS9", // Enter the Key ID generated from the Dashboard
                     "amount": result.amount,
@@ -47,6 +45,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     }
                 };
 
+                // @ts-ignore
                 const rzp = new Razorpay(options);
                 rzp.on('error', (error) => {
                     reject(error)
@@ -56,7 +55,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 });
                 rzp.open();
             })
-            const captureResult = await captureOrderMutation({
+            await captureOrderMutation({
                 orderId: result.order_id,
                 paymentId: razpResult.razorpay_payment_id,
                 signature: razpResult.razorpay_signature

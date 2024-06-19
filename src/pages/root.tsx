@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ActiveCompetitions } from '~/components/dashboard/activeCompetitions'
-import { listChampionships } from '~/api/endpoints/championships'
 
 
 export const Component: React.FC = () => {
-    const championshipsResult = listChampionships()
-
     return (
         <>
             <div className="bg-gray-800 mb-4">
