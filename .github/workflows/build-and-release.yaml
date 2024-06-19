@@ -53,7 +53,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         username: studyabacus
         host: ${{ secrets.SRV2_HOST }}
-        source: "dist/"
+        source: ${{ vars.GITHUB_WORKSPACE }}/dist/"
         target: "/home/studyabacus/frontends/exam-ui"
   
 
