@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useLocalStorage } from 'usehooks-ts'
 
 const AuthContext = createContext<AuthContextType>({
@@ -9,10 +9,6 @@ const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-type Props = {
-  children?: React.ReactNode;
-};
-
 export type AuthContextType = {
   admitCard: any;
   isAuthenticated: boolean;
@@ -20,7 +16,7 @@ export type AuthContextType = {
   logout: () => void;
 };
 
-export const AuthProvider: React.FC<Props> = ({ children }) => {
+export const AuthProvider: React.FC = () => {
   const [admitCard, setAdmitCard] = useLocalStorage("admitCard", null);
   const navigate = useNavigate();
 
@@ -49,7 +45,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     <AuthContext.Provider
         value={value}
     >
-      {children}
+      <Outlet />
     </AuthContext.Provider>
   )
 };
