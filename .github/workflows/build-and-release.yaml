@@ -46,7 +46,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build
-    
+
     - name: Copy build to server
       uses: appleboy/scp-action@v0.1.7
       with:
@@ -55,6 +55,5 @@ jobs:
         host: ${{ secrets.SRV2_HOST }}
         source: "dist/"
         target: "/home/studyabacus/frontends/exam-ui"
-        strip_components: 1
   
 
