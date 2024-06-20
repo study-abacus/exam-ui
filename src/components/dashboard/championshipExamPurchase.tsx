@@ -103,18 +103,20 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                                 ₹ {order?.amount}
 
                                             </div>
-                                            <div >
+                                            <div>
                                             <div>
                                                 {
                                                     loadingPrice ? (
                                                         <Loading />
                                                     ) : (
-                                                        <ActionButton
+                                                        
+                                                            <ActionButton
                                                             onClick={() => payNowMutation()}
                                                             isLoading={payNowRunning}
                                                         >
                                                             Pay Now
                                                         </ActionButton>
+                                                        
                                                     )
 
                                                 }

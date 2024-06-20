@@ -15,6 +15,10 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
         name: "",
         guardian_name: "",
         ci: "",
+        sa_class : "",
+        city : "",
+        country: "",
+        age : "",
         phone: "",
         email: ""
     });
@@ -82,6 +86,54 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
                             onFocus={() => handleFocus('ci')}
                         />
                         {focusedField === 'ci' && updatedProfile.ci && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+                    <div className="relative mt-3">
+                        <TextInput
+                            id="sa_class"
+                            label="Class"
+                            value={updatedProfile.sa_class}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'sa_class')}
+                            onFocus={() => handleFocus('sa_class')}
+                        />
+                        {focusedField === 'sa_class' && updatedProfile.sa_class && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+                    <div className="relative mt-3">
+                        <TextInput
+                            id="city"
+                            label="City"
+                            value={updatedProfile.city}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'city')}
+                            onFocus={() => handleFocus('city')}
+                        />
+                        {focusedField === 'city' && updatedProfile.city && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+                    <div className="relative mt-3">
+                        <TextInput
+                            id="country"
+                            label="Country"
+                            value={updatedProfile.country}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'country')}
+                            onFocus={() => handleFocus('country')}
+                        />
+                        {focusedField === 'country' && updatedProfile.country && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+                    <div className="relative mt-3">
+                        <TextInput
+                            id="age"
+                            label="Age"
+                            value={updatedProfile.age}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'age')}
+                            onFocus={() => handleFocus('agge')}
+                        />
+                        {focusedField === 'age' && updatedProfile.age && (
                             <FaCheck className="absolute right-2 top-2 text-green-500" />
                         )}
                     </div>
