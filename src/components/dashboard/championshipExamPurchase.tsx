@@ -7,6 +7,7 @@ import { Loading } from '~/components/loading'
 import { ActionButton } from '~/components/base/actionButton'
 import Popup from 'reactjs-popup'
 import { AxiosError } from 'axios'
+import { getChampionship } from '~/api/endpoints/championships'
 
 
 type Props = {
@@ -20,6 +21,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
 
 
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
+    const { data: championship } = getChampionship(competition.id)
     
     const { data: order, isLoading: loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
     const { mutateAsync: createOrderMutation } = createOrder()
@@ -90,6 +92,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                     isMulti
                                     value={selectedExams}
                                     onChange={(selectedExams: any) => setSelectedExams(selectedExams)}
+                                    isOptionDisabled={() => selectedExams.length >= championship?.max_exams}
                                     options={examinations.map((examination: any) => ({ value: examination.id, label: examination.name }))}
                                 />
                             </form>

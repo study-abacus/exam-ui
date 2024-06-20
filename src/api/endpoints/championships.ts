@@ -7,3 +7,8 @@ export const listChampionships = () => useQuery("championships", async () => {
   return response.data;
 })
 
+export const getChampionship = (id: number) => useQuery("championship", async () => {
+  const response = await client.get(`api/v1/championships/${id}/`);
+  return response.data;
+})
+
