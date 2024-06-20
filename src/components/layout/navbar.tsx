@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '~/hooks/useAuth'
 
 
 export const Navbar: React.FC = () => {
     const [navOpen, setNavOpen] = React.useState(false)
+    const {isAuthenticated, logout} = useAuth()
 
     return (
         <div className="sticky">
@@ -26,6 +28,12 @@ export const Navbar: React.FC = () => {
                                         to="/#active-competitions" >
                                         Active Competitions
                                     </Link>
+                                    {isAuthenticated &&
+                                    <button
+                                    className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    onClick={() => {logout()}} >
+                                    Logout
+                                </button>}
                                 </div>
                             </div>
                         </div>
@@ -56,6 +64,12 @@ export const Navbar: React.FC = () => {
                         >
                             Active Competitions
                         </Link>
+                        {isAuthenticated &&
+                                    <button
+                                    className="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium" 
+                                    onClick={() => {logout()}} >
+                                    Logout
+                                </button>}
                     </div>
                 </div>}
             </nav>
