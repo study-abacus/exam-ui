@@ -26,7 +26,7 @@ export const updateProfile = () => {
             );
             return response.data;
         },
-        onSuccess(data, variables, context) {
+        onSuccess() {
             queryClient.invalidateQueries("profile")
 
         },
