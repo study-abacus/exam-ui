@@ -139,18 +139,34 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 )}
             </div>
 
-            <Popup modal open={modalOpen} >
-                <div className="flex flex-col p-5">
-                    <div className="text-2xl text-center">
-                        ADMIT CARD
-                    </div>
-                    <div className="text-center mt-3">
-                        !! Please take a screenshot of your roll number and password.
-                    </div>
-                    <div className="text-center mt-3">
-                        Roll Number : {admitCard?.id}
-                        <br />
-                        Password : {admitCard?.password}
+            <Popup modal open={modalOpen} onClose={() => setModalOpen(false)} closeOnDocumentClick>
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative">
+                        <button className="absolute top-3 right-3 text-gray-500 hover:text-gray-800" onClick={() => setModalOpen(false)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div className="text-2xl font-bold text-center mb-4">
+                            ADMIT CARD
+                        </div>
+                        <div className="text-center mb-4">
+                            Please take a screenshot of your roll number and password.
+                        </div>
+                        <div className="text-center mb-4">
+                            <table className="table-auto w-full border-collapse">
+                                <tbody>
+                                    <tr className="border-b">
+                                        <td className="px-4 py-2 font-semibold">Roll Number</td>
+                                        <td className="px-4 py-2">{admitCard?.id}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-4 py-2 font-semibold">Password</td>
+                                        <td className="px-4 py-2">{admitCard?.password}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </Popup>
