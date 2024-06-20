@@ -19,18 +19,18 @@ export const Navbar: React.FC = () => {
                             <div className="hidden md:block">
                                 <div className="flex items-baseline ml-10 space-x-4">
                                     <Link
-                                        className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                        className="text-white px-3 py-2 rounded-md text-sm font-medium"
                                         to="/" >
                                         Home
                                     </Link>
                                     <Link
-                                        className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                        className="text-white px-3 py-2 rounded-md text-sm font-medium"
                                         to="/#active-competitions" >
                                         Active Competitions
                                     </Link>
                                     {isAuthenticated &&
                                     <button
-                                    className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    className="text-white px-3 py-2 rounded-md text-sm font-medium"
                                     onClick={() => {logout()}} >
                                     Logout
                                 </button>}
@@ -53,20 +53,20 @@ export const Navbar: React.FC = () => {
                 {navOpen && <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <Link 
-                            className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium" 
+                            className="text-white block px-3 py-2 rounded-md text-base font-medium" 
                             to="/"
                         >
                             Home
                         </Link>
                         <Link 
-                            className="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium" 
+                            className="text-white block px-3 py-2 rounded-md text-base font-medium" 
                             to="/#active-competitions"
                         >
                             Active Competitions
                         </Link>
                         {isAuthenticated &&
                                     <button
-                                    className="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium" 
+                                    className="text-white block px-3 py-2 rounded-md text-base font-medium" 
                                     onClick={() => {logout()}} >
                                     Logout
                                 </button>}
