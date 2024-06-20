@@ -36,7 +36,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             })
             const razpResult: any = await new Promise((resolve, reject) => {
                 const options = {
-                    "key": "rzp_test_q818zEKBeaYNS9", 
+                    "key": "rzp_live_ySnkB2sZEALpwf", 
                     "amount": result.amount,
                     "currency": "INR",
                     "name": "Study Abacus", 
