@@ -13,6 +13,7 @@ export const ExaminationRow: React.FC<Props> = ({
 
 }) => {
     const {data: examination, isLoading} = getExamination(examination_id)
+    
     return (
        <>
        {

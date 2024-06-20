@@ -7,7 +7,7 @@ import { useAuth } from '~/hooks/useAuth'
 export const WithAuthentication: React.FC = () => {
     const { isAuthenticated } = useAuth();
 
-    if (!isAuthenticated && false) {
+    if (!isAuthenticated) {
         return <Navigate to="/" />
     }
 

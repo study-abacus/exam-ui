@@ -19,6 +19,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
 
 
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
+    
     const { data: order, isLoading: loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
     const { mutateAsync: createOrderMutation } = createOrder()
     const { mutateAsync: captureOrderMutation } = captureOrder()
