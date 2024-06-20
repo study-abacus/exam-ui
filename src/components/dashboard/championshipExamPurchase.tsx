@@ -5,6 +5,7 @@ import { listExaminations } from '~/api/endpoints/examinations'
 import { getOrderPrice, createOrder, captureOrder } from '~/api/endpoints/orders'
 import { Loading } from '~/components/loading'
 import { ActionButton } from '~/components/base/actionButton'
+import Popup from 'reactjs-popup'
 
 
 type Props = {
@@ -13,9 +14,12 @@ type Props = {
 
 export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
     const [ selectedExams, setSelectedExams ] = React.useState([])
+    const [ admitCard, setAdmitCard] = React.useState(null)
+    const [ modalOpen, setModalOpen] = React.useState(false)
+
 
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
-    const { data: order } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
+    const { data: order, isLoading : loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
     const { mutateAsync: createOrderMutation } = createOrder()
     const { mutateAsync: captureOrderMutation } = captureOrder()
 
@@ -55,18 +59,23 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 });
                 rzp.open();
             })
-            await captureOrderMutation({
+            
+            const captureOrderRes = await captureOrderMutation({
                 orderId: result.order_id,
                 paymentId: razpResult.razorpay_payment_id,
                 signature: razpResult.razorpay_signature
             })
+            setAdmitCard(captureOrderRes)
+            setModalOpen(true)
         }, [competition, selectedExams])
+
+    
     })
 
     return (
         <>
             <div className="flex flex-col md:flex-row mt-4">
-                {loadingExaminations ? (
+                {loadingExaminations || loadingPrice ? (
                     <div className="justify-center">
                         <Loading />
                     </div>
@@ -112,6 +121,22 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 </>
                 )}
             </div>
+
+            <Popup modal open={modalOpen} >
+                <div className="flex flex-col p-5">
+                    <div className="text-2xl text-center">
+                        ADMIT CARD
+                    </div>
+                    <div className="text-center mt-3">
+                        !! Please take a screenshot of your roll number and password.
+                    </div>
+                    <div className="text-center mt-3">
+                        Roll Number : {admitCard?.id}
+                        <br/>
+                        Password : {admitCard?.password}
+                    </div>
+                </div>
+            </Popup>
         </>
     )
 }
