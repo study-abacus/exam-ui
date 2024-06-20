@@ -23,7 +23,7 @@ export const updateProfile = () =>
     useMutation({
         mutationFn: async ({ data }: UpdateProfileParams) => {
             const response = await client.put(
-                `api/v1/profile/`,
+                `api/v1/admit_card/current/`,
                 data
             );
             return response.data;
