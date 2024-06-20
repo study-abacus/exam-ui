@@ -93,11 +93,13 @@ export const ProfileEditor: React.FC<Props> = ({
                             />
                     </div>
                     <div className="flex justify-end mt-3">
-                        <ActionButton
+                       <div>
+                       <ActionButton
                             onClick={sendRequest}
                             isLoading={profileUpdating}>
                             Save
                         </ActionButton>
+                       </div>
                     </div>
                 </>
 

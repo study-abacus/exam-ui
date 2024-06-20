@@ -36,10 +36,10 @@ export const AuthProvider: React.FC = () => {
 
   const value = useMemo(
     () => ({
-      data: {
+      data: (!!authData?.token ? {
         ...authData, 
-        token_data : jwtDecode(authData?.token)
-      },
+        token_data : authData && jwtDecode(authData?.token), 
+      } : {}) ,
       isAuthenticated: !!authData?.token,
       login,
       logout,

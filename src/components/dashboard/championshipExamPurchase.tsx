@@ -13,17 +13,17 @@ type Props = {
 }
 
 export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
-    const [ selectedExams, setSelectedExams ] = React.useState([])
-    const [ admitCard, setAdmitCard] = React.useState(null)
-    const [ modalOpen, setModalOpen] = React.useState(false)
+    const [selectedExams, setSelectedExams] = React.useState([])
+    const [admitCard, setAdmitCard] = React.useState(null)
+    const [modalOpen, setModalOpen] = React.useState(false)
 
 
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
-    const { data: order, isLoading : loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
+    const { data: order, isLoading: loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
     const { mutateAsync: createOrderMutation } = createOrder()
     const { mutateAsync: captureOrderMutation } = captureOrder()
 
-    const { mutate: payNowMutation, isLoading: payNowRunning} = useMutation({
+    const { mutate: payNowMutation, isLoading: payNowRunning , isError} = useMutation({
         mutationFn: useCallback(async () => {
             const result = await createOrderMutation({
                 championshipId: competition.id,
@@ -59,7 +59,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                 });
                 rzp.open();
             })
-            
+
             const captureOrderRes = await captureOrderMutation({
                 orderId: result.order_id,
                 paymentId: razpResult.razorpay_payment_id,
@@ -69,63 +69,72 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             setModalOpen(true)
         }, [competition, selectedExams])
 
-    
+
     })
 
     return (
         <>
             <div className="flex flex-col md:flex-row mt-4">
-                {loadingExaminations  ? (
+                {loadingExaminations ? (
                     <div className="justify-center">
                         <Loading />
                     </div>
                 ) : (
-                <>
-                    <div className="md:basis-1/2">
-                        <form className="max-w-sm mx-auto">
-                            <label htmlFor="countries" className="block mb-2 font-medium text-gray-900">Select Examinations</label>
-                            <Select
-                                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                isMulti
-                                value={selectedExams}
-                                onChange={(selectedExams: any) => setSelectedExams(selectedExams)}
-                                options={examinations.map((examination: any) => ({ value: examination.id, label: examination.name }))}
-                            />
-                        </form>
-                    </div>
-                    <div className="mx-5 relative flex flex-col mt-6 md:basis-1/2">
-                        <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
-                            <div className="text-center">
-                                {order && selectedExams.length > 0 ? (
-                                    <div className="flex flex-box justify-between items-center">
-                                        <div className="text-3xl">
-                                            ₹ {order.amount }
-                                        </div>
-                                        <div>
-                                            {
-                                                loadingPrice ? (
-                                                    <Loading/>
-                                                ): (
-                                                    <ActionButton
-                                                        onClick={() => payNowMutation()}
-                                                        isLoading={payNowRunning}
-                                                    >
-                                                        Pay Now
-                                                    </ActionButton>
-                                                )
-                                                
+                    <>
+                        <div className="md:basis-1/2">
+                            <form className="max-w-sm mx-auto">
+                                <label htmlFor="countries" className="block mb-2 font-medium text-gray-900">Select Examinations</label>
+                                <Select
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    isMulti
+                                    value={selectedExams}
+                                    onChange={(selectedExams: any) => setSelectedExams(selectedExams)}
+                                    options={examinations.map((examination: any) => ({ value: examination.id, label: examination.name }))}
+                                />
+                            </form>
+                        </div>
+                        <div className="mx-5 relative flex flex-col mt-6 md:basis-1/2">
+                            <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
+                                <div className="text-center">
+                                    {selectedExams.length > 0 ? (
+                                        <div className="flex flex-box justify-between items-center">
+                                            <div className="text-3xl">
+                                                ₹ {order?.amount}
+
+                                            </div>
+                                            <div className="flex flex-col">
+                                            <div>
+                                                {
+                                                    loadingPrice ? (
+                                                        <Loading />
+                                                    ) : (
+                                                        <ActionButton
+                                                            onClick={() => payNowMutation()}
+                                                            isLoading={payNowRunning}
+                                                        >
+                                                            Pay Now
+                                                        </ActionButton>
+                                                    )
+
+                                                }
+                                            </div>
+                                            {isError && <div className="text-red-500 mt-3 text-sm">
+
+                                                Payment Failed. Please try Again later
+                                            </div>
                                             }
+                                            </div>
+                                           
                                         </div>
-                                    </div>
-                                ) : (
-                                    <>
-                                        No Exam selected
-                                    </>
-                                )}
+                                    ) : (
+                                        <>
+                                            No Exam selected
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </>
+                    </>
                 )}
             </div>
 
@@ -139,7 +148,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     </div>
                     <div className="text-center mt-3">
                         Roll Number : {admitCard?.id}
-                        <br/>
+                        <br />
                         Password : {admitCard?.password}
                     </div>
                 </div>

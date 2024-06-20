@@ -13,7 +13,7 @@ export const AdmitCardLogin: React.FC = () => {
     password: "",
   })
 
-  const { mutateAsync: getTokenMutation, isLoading } = getAdmitCardToken()
+  const { mutateAsync: getTokenMutation, isLoading, isError } = getAdmitCardToken()
   const handleLogin = useCallback(async () => {
     const result: any = await getTokenMutation(loginForm)
     login(result.jwt)
@@ -50,7 +50,16 @@ export const AdmitCardLogin: React.FC = () => {
               <ActionButton onClick={handleLogin} isLoading={isLoading}>
                 Login
               </ActionButton>
+
+              
             </div>
+           
+            {isError && <div className="text-red-500 mt-3 text-sm">
+              
+                Incorrect Roll Number or Password
+            </div>
+}
+
           </div>
         </div>
       </div>
