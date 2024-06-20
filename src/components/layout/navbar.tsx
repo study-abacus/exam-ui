@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
                         </div>
                         <div className="flex -mr-2 md:hidden">
                             <button 
-                                className="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
+                                className="text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
                                 onClick={() => setNavOpen(_ => !_)}
                             >
                                 <svg width="20" height="20" fill="currentColor" className="w-8 h-8" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
