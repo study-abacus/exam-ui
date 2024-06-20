@@ -6,7 +6,7 @@ export const client = axios.create({
 })
 
 client.interceptors.request.use((request) => {
-  const token = localStorage.getItem("auth");
+  const token = JSON.parse(localStorage.getItem("auth")).token;
   if (token) request.headers['Authorization'] = `Bearer ${token}`;
   return request;
 });

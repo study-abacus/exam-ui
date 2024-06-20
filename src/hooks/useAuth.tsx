@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useLocalStorage } from 'usehooks-ts'
@@ -35,7 +36,10 @@ export const AuthProvider: React.FC = () => {
 
   const value = useMemo(
     () => ({
-      data: authData,
+      data: {
+        ...authData, 
+        token_data : jwtDecode(authData?.token)
+      },
       isAuthenticated: !!authData?.token,
       login,
       logout,
