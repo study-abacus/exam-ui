@@ -6,6 +6,7 @@ import { getOrderPrice, createOrder, captureOrder } from '~/api/endpoints/orders
 import { Loading } from '~/components/loading'
 import { ActionButton } from '~/components/base/actionButton'
 import Popup from 'reactjs-popup'
+import { AxiosError } from 'axios'
 
 
 type Props = {
@@ -24,7 +25,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
     const { mutateAsync: createOrderMutation } = createOrder()
     const { mutateAsync: captureOrderMutation } = captureOrder()
 
-    const { mutate: payNowMutation, isLoading: payNowRunning , isError} = useMutation({
+    const { mutate: payNowMutation, isLoading: payNowRunning , isError, error} = useMutation<any,AxiosError<any>>({
         mutationFn: useCallback(async () => {
             const result = await createOrderMutation({
                 championshipId: competition.id,
@@ -32,10 +33,10 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             })
             const razpResult: any = await new Promise((resolve, reject) => {
                 const options = {
-                    "key": "rzp_test_q818zEKBeaYNS9", // Enter the Key ID generated from the Dashboard
+                    "key": "rzp_test_q818zEKBeaYNS9", 
                     "amount": result.amount,
                     "currency": "INR",
-                    "name": "Study Abacus", //your business name
+                    "name": "Study Abacus", 
                     "description": "Test Transaction",
                     "image": "https://studyabacus.com/admin/assets/images/logo/1684778226Abacus.png",
                     "order_id": result.order_id,
@@ -70,7 +71,6 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             setModalOpen(true)
         }, [competition, selectedExams])
 
-
     })
 
     return (
@@ -103,7 +103,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                                 ₹ {order?.amount}
 
                                             </div>
-                                            <div className="flex flex-col">
+                                            <div >
                                             <div>
                                                 {
                                                     loadingPrice ? (
@@ -118,10 +118,10 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                                     )
 
                                                 }
-                                            </div>
+                                            </div>  
                                             {isError && <div className="text-red-500 mt-3 text-sm">
 
-                                                Payment Failed. Please try Again later
+                                                {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later" }
                                             </div>
                                             }
                                             </div>

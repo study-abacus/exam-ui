@@ -28,18 +28,19 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
     const { mutate: profileMutation, isLoading: profileUpdating } = updateProfile();
 
     const sendRequest = useCallback(() => {
-        profileMutation({ ...updatedProfile });
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 3000); // Hide message after 3 seconds
+        profileMutation({ ...updatedProfile }, { onSuccess: () =>{ 
+            setShowSuccess(true)
+            setTimeout(() => setShowSuccess(false), 5000); 
+        } });
+        
     }, [updatedProfile, profileMutation]);
-
+    
     const handleFocus = (field: string) => {
         setFocusedField(field);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         setUpdatedProfile({ ...updatedProfile, [field]: e.target.value });
-        setShowSuccess(false); // Hide success message when typing
     };
 
     return (
