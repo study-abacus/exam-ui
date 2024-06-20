@@ -22,8 +22,8 @@ export const ExaminationRow: React.FC<Props> = ({
             <div className="bg-white rounded-xl divide-y text-gray-900 divide-gray-200 mt-5">
             <div className="flex flex-row p-3 justify-between">
                 <div>
-                    <div className="text-lg font-semibold">{examination.name}</div>
-                    <div className="mt-1 text-gray-500 md:text-md">{examination && format(Date.parse(examination.exam_start_dt), 'iiii, dd MMMM yyyy')}</div>
+                    <div className="text-lg font-semibold">{examination?.name}</div>
+                    <div className="mt-1 text-gray-500 md:text-md">{examination && format(Date.parse(examination?.exam_start_dt), 'iiii, dd MMMM yyyy')}</div>
                 </div>
                 <div className="flex justify-end items-center">
                     <div>
