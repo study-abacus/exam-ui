@@ -8,6 +8,7 @@ import { ActionButton } from '~/components/base/actionButton'
 import Popup from 'reactjs-popup'
 import { AxiosError } from 'axios'
 import { getChampionship } from '~/api/endpoints/championships'
+import { useAuth } from '~/hooks/useAuth'
 
 
 type Props = {
@@ -19,7 +20,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
     const [admitCard, setAdmitCard] = React.useState(null)
     const [modalOpen, setModalOpen] = React.useState(false)
 
-
+    const { isAuthenticated } = useAuth()
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
     const { data: championship } = getChampionship(competition.id)
     
@@ -92,7 +93,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                     isMulti
                                     value={selectedExams}
                                     onChange={(selectedExams: any) => setSelectedExams(selectedExams)}
-                                    isOptionDisabled={() => selectedExams.length >= championship?.max_exams}
+                                    isOptionDisabled={() => selectedExams.length >= championship?.max_exams || isAuthenticated}
                                     options={examinations.map((examination: any) => ({ value: examination.id, label: examination.name }))}
                                 />
                             </form>
