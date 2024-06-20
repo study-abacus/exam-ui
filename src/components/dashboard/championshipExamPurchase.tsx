@@ -75,7 +75,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
     return (
         <>
             <div className="flex flex-col md:flex-row mt-4">
-                {loadingExaminations || loadingPrice ? (
+                {loadingExaminations  ? (
                     <div className="justify-center">
                         <Loading />
                     </div>
@@ -102,12 +102,19 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                                             ₹ {order.amount }
                                         </div>
                                         <div>
-                                            <ActionButton
-                                                onClick={() => payNowMutation()}
-                                                isLoading={payNowRunning}
-                                            >
-                                                Pay Now
-                                            </ActionButton>
+                                            {
+                                                loadingPrice ? (
+                                                    <Loading/>
+                                                ): (
+                                                    <ActionButton
+                                                        onClick={() => payNowMutation()}
+                                                        isLoading={payNowRunning}
+                                                    >
+                                                        Pay Now
+                                                    </ActionButton>
+                                                )
+                                                
+                                            }
                                         </div>
                                     </div>
                                 ) : (
