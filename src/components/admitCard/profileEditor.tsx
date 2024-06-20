@@ -129,6 +129,7 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
                         <TextInput
                             id="age"
                             label="Age"
+                            type="number"
                             value={updatedProfile.age}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'age')}
                             onFocus={() => handleFocus('agge')}
