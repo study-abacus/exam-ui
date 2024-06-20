@@ -8,6 +8,6 @@ export const listExaminations = (championshipId: number) => useQuery(["examinati
 })
 
 export const getExamination = (examinationId: number) => useQuery(["examinations-e", examinationId], async () => {
-  const response = await client.get(`api/v1/examination/${examinationId}`);
+  const response = await client.get(`api/v1/examination/${examinationId}/`);
   return response.data;
 })
