@@ -1,14 +1,17 @@
-import React, { useCallback } from 'react'
+import React, { ChangeEvent, useCallback } from 'react'
 import Select from 'react-select'
 import { useMutation } from 'react-query'
 import { listExaminations } from '~/api/endpoints/examinations'
-import { getOrderPrice, createOrder, captureOrder } from '~/api/endpoints/orders'
+import { getOrderPrice, createOrder, captureOrder } from '~/api/endpoints/ordersV2'
 import { Loading } from '~/components/loading'
 import { ActionButton } from '~/components/base/actionButton'
 import Popup from 'reactjs-popup'
 import { AxiosError } from 'axios'
 import { getChampionship } from '~/api/endpoints/championships'
 import { useAuth } from '~/hooks/useAuth'
+import { TextInput } from '../base/textInput'
+import { FaCheck } from 'react-icons/fa'
+import { load } from "@cashfreepayments/cashfree-js";
 
 
 type Props = {
@@ -16,54 +19,70 @@ type Props = {
 }
 
 export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
+
+    const [orderProfile, setOrderProfile] = React.useState({
+        name: '',
+        email: '',
+        phone: '',
+        country_code: '91'
+    })
     const [selectedExams, setSelectedExams] = React.useState([])
     const [admitCard, setAdmitCard] = React.useState(null)
     const [modalOpen, setModalOpen] = React.useState(false)
+    const [orderProfileModalOpen, setOrderProfileModalOpen] = React.useState(false);
+    const [focusedField, setFocusedField] = React.useState<string | null>(null);
+
 
     const { isAuthenticated } = useAuth()
     const { data: examinations = [], isLoading: loadingExaminations } = listExaminations(competition.id)
     const { data: championship } = getChampionship(competition.id)
-    
+
     const { data: order, isLoading: loadingPrice } = getOrderPrice(competition.id, selectedExams.map((exam: any) => exam.value))
     const { mutateAsync: createOrderMutation } = createOrder()
     const { mutateAsync: captureOrderMutation } = captureOrder()
 
-    const { mutate: payNowMutation, isLoading: payNowRunning , isError, error} = useMutation<any,AxiosError<any>>({
+    const handleFocus = (field: string) => {
+        setFocusedField(field);
+    };
+    const handleChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
+        setOrderProfile(prev => ({ ...prev, [field]: e.target.value }));
+    };
+
+
+    const { mutate: payNowMutation, isLoading: payNowRunning, isError, error } = useMutation<any, AxiosError<any>>({
         mutationFn: useCallback(async () => {
             const result = await createOrderMutation({
                 championshipId: competition.id,
-                examinationIds: selectedExams.map((exam: any) => exam.value)
-            })
-            const razpResult: any = await new Promise((resolve, reject) => {
-                const options = {
-                    "key": "rzp_live_ySnkB2sZEALpwf", 
-                    "amount": result.amount,
-                    "currency": "INR",
-                    "name": "Study Abacus", 
-                    "description": "Test Transaction",
-                    "image": "https://studyabacus.com/admin/assets/images/logo/1684778226Abacus.png",
-                    "order_id": result.order_id,
-                    "handler": response => {
-                        resolve(response)
-                    },
-                    "notes": {
-                        "address": "Razorpay Corporate Office"
-                    },
-                    "theme": {
-                        "color": "#3399cc"
-                    }
-                };
+                examinationIds: selectedExams.map((exam: any) => exam.value),
+                name: orderProfile.name,
+                phone: orderProfile.phone,
+                email: orderProfile.email,
+                country_code: orderProfile.country_code
 
-                // @ts-ignore
-                const rzp = new Razorpay(options);
-                rzp.on('error', (error) => {
-                    reject(error)
-                })
-                rzp.on('payment.failed', (response) => {
-                    reject(response.error)
-                });
-                rzp.open();
             })
+            const cashfree = await load({
+                mode: "sandbox"
+            });
+            const razpResult: any = await new Promise((resolve, reject) => {
+                const checkoutOptions = {
+                    paymentSessionId: result.payment_session_id,
+                    redirectTarget: "_modal",
+                };
+                cashfree.checkout(checkoutOptions).then((result) => {
+                    if (result.error) {
+                        // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
+                        reject(result.error)
+                    }
+                    if (result.redirect) {
+                        console.log("Payment will be redirected");
+                    }
+                    if (result.paymentDetails) {
+                        resolve(result.paymentDetails)
+                    }
+                });
+            })
+
+
 
             const captureOrderRes = await captureOrderMutation({
                 orderId: result.order_id,
@@ -72,7 +91,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             })
             setAdmitCard(captureOrderRes)
             setModalOpen(true)
-        }, [competition, selectedExams])
+        }, [competition, selectedExams, orderProfile])
 
     })
 
@@ -108,30 +127,31 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
 
                                             </div>
                                             <div>
-                                            <div>
-                                                {
-                                                    loadingPrice ? (
-                                                        <Loading />
-                                                    ) : (
-                                                        
+                                                <div>
+                                                    {
+                                                        loadingPrice ? (
+                                                            <Loading />
+                                                        ) : (
+
                                                             <ActionButton
-                                                            onClick={() => payNowMutation()}
-                                                            isLoading={payNowRunning}
-                                                        >
-                                                            Pay Now
-                                                        </ActionButton>
-                                                        
-                                                    )
+                                                                onClick={() =>
+                                                                    setOrderProfileModalOpen(true)
+                                                                }
+                                                            >
+                                                                Pay Now
+                                                            </ActionButton>
 
+                                                        )
+
+                                                    }
+                                                </div>
+                                                {isError && <div className="text-red-500 mt-3 text-sm">
+
+                                                    {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later"}
+                                                </div>
                                                 }
-                                            </div>  
-                                            {isError && <div className="text-red-500 mt-3 text-sm">
+                                            </div>
 
-                                                {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later" }
-                                            </div>
-                                            }
-                                            </div>
-                                           
                                         </div>
                                     ) : (
                                         <>
@@ -144,6 +164,55 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     </>
                 )}
             </div>
+
+            <Popup modal open={orderProfileModalOpen} onClose={() => setOrderProfileModalOpen(false)} closeOnDocumentClick>
+                <div className="relative">
+                    <TextInput
+                        id="name"
+                        label="Name"
+                        value={orderProfile.name}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'name')}
+                        onFocus={() => handleFocus('name')}
+                    />
+                    {focusedField === 'name' && orderProfile.name && (
+                        <FaCheck className="absolute right-2 top-2 text-green-500" />
+                    )}
+                </div>
+                <div className="relative">
+                    <TextInput
+                        id="phone"
+                        label="Phone"
+                        value={orderProfile.phone}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'phone')}
+                        onFocus={() => handleFocus('phone')}
+                    />
+                    {focusedField === 'phone' && orderProfile.phone && (
+                        <FaCheck className="absolute right-2 top-2 text-green-500" />
+                    )}
+                </div>
+                <div className="relative">
+                    <TextInput
+                        id="email"
+                        label="Email"
+                        value={orderProfile.email}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
+                        onFocus={() => handleFocus('email')}
+                    />
+                    {focusedField === 'email' && orderProfile.email && (
+                        <FaCheck className="absolute right-2 top-2 text-green-500" />
+                    )}
+                </div>
+                <ActionButton
+                    onClick={() => payNowMutation()}
+                    isLoading={payNowRunning}
+                >
+                    Proceed
+                </ActionButton>
+                {isError && <div className="text-red-500 mt-3 text-sm">
+                    {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later"}
+                </div>
+                }
+            </Popup>
 
             <Popup modal open={modalOpen} onClose={() => setModalOpen(false)} closeOnDocumentClick>
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">

@@ -1,8 +1,11 @@
 import axios from 'axios'
 
 
+// export const client = axios.create({
+//   baseURL: "https://examination-api.studyabacus.com"
+// })
 export const client = axios.create({
-  baseURL: "https://examination-api.studyabacus.com"
+  baseURL: "http://localhost:8001"
 })
 
 client.interceptors.request.use((request) => {

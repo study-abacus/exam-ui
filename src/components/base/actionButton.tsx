@@ -2,12 +2,12 @@ import React from 'react'
 
 
 type Props = {
-    isLoading: boolean
+    isLoading? : boolean
     children: React.ReactNode
     onClick: () => void
 }
 
-export const ActionButton: React.FC<Props> = ({ isLoading, children, onClick }) => {
+export const ActionButton: React.FC<Props> = ({ isLoading = false, children, onClick }) => {
     const disabledClass = isLoading ? 'opacity-50 cursor-not-allowed' : ''
 
     return (
