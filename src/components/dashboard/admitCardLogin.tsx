@@ -46,20 +46,16 @@ export const AdmitCardLogin: React.FC = () => {
                 }
               />
             </div>
-            <div className="inline-flex justify-center mt-4">
+            <div className="flex flex-row justify-end mt-4">
               <ActionButton onClick={handleLogin} isLoading={isLoading}>
                 Login
               </ActionButton>
-
-              
             </div>
-           
-            {isError && <div className="text-red-500 mt-3 text-sm">
-              
+            {
+              isError && <div className="text-red-500 mt-3 text-sm">
                 Incorrect Roll Number or Password
-            </div>
-}
-
+              </div>
+            }
           </div>
         </div>
       </div>
