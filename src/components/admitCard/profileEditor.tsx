@@ -15,10 +15,10 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
         name: "",
         guardian_name: "",
         ci: "",
-        sa_class : "",
+        sa_class : 0,
         city : "",
         country: "",
-        age : "",
+        age : 0,
         phone: "",
         email: ""
     });
@@ -97,7 +97,7 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
                             onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'sa_class')}
                             onFocus={() => handleFocus('sa_class')}
                         />
-                        {focusedField === 'sa_class' && updatedProfile.sa_class && (
+                        {focusedField === 'sa_class' && !!updatedProfile.sa_class && (
                             <FaCheck className="absolute right-2 top-2 text-green-500" />
                         )}
                     </div>
@@ -134,7 +134,7 @@ export const ProfileEditor: React.FC<Props> = ({ isLoading, profile }) => {
                             onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'age')}
                             onFocus={() => handleFocus('agge')}
                         />
-                        {focusedField === 'age' && updatedProfile.age && (
+                        {focusedField === 'age' && !!updatedProfile.age && (
                             <FaCheck className="absolute right-2 top-2 text-green-500" />
                         )}
                     </div>

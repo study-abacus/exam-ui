@@ -25,7 +25,7 @@ export const OrderProfileEditor: React.FC<Props> = ({ value, onChange }) => {
 
     return (
         <div>
-            <h2 className="text-2xl font-semibold mb-4">Fill Details</h2>
+            <h2 className="text-2xl font-semibold mb-4">Student Details</h2>
             <div className="mb-4 relative">
                 <TextInput
                     id="name"

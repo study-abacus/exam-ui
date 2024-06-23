@@ -43,8 +43,8 @@ export const createOrder = () =>
 
 export type CaptureOrderParams = {
     orderId: string,
-    paymentId: string,
-    signature: string
+    paymentId?: string,
+    signature?: string
 }
 export const captureOrder = () =>
     useMutation({
@@ -54,6 +54,8 @@ export const captureOrder = () =>
                 { payment_id: paymentId, signature }
             );
             return response.data;
-        }
+        },
+        retry: 3,
+        retryDelay: 1000
     })
 

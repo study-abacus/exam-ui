@@ -12,7 +12,6 @@ import { ActionButton } from "~/components/base/actionButton";
 import { OrderProfileEditor } from "~/components/dashboard/orderProfileEditor";
 import { AdmitCard } from "~/components/dashboard/admitCard";
 import { Modal } from "~/components/base/modal";
-import Popup from "reactjs-popup";
 import { AxiosError } from "axios";
 import { getChampionship } from "~/api/endpoints/championships";
 import { useAuth } from "~/hooks/useAuth";
@@ -65,7 +64,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
       const cashfree = await load({
         mode: "sandbox",
       });
-      const razpResult: any = await new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         const checkoutOptions = {
           paymentSessionId: result.payment_session_id,
           redirectTarget: "_modal",
@@ -85,9 +84,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
       });
 
       const captureOrderRes = await captureOrderMutation({
-        orderId: result.order_id,
-        paymentId: razpResult.razorpay_payment_id,
-        signature: razpResult.razorpay_signature,
+        orderId: result.order_id
       });
       setOrderProfileModalOpen(false)
       setSelectedExams([])
@@ -176,7 +173,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
             {isError && (
               <div className="text-red-500 mt-3 text-sm">
                 {error?.response?.data?.context?.ERROR ||
-                  "Payment Failed. Please try Again later"}
+                  "Payment Failed. Please try again later"}
               </div>
             )}
           </div>
