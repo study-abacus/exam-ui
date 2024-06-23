@@ -164,56 +164,63 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
                     </>
                 )}
             </div>
-
             <Popup modal open={orderProfileModalOpen} onClose={() => setOrderProfileModalOpen(false)} closeOnDocumentClick>
-                <div className="relative">
-                    <TextInput
-                        id="name"
-                        label="Name"
-                        value={orderProfile.name}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'name')}
-                        onFocus={() => handleFocus('name')}
-                    />
-                    {focusedField === 'name' && orderProfile.name && (
-                        <FaCheck className="absolute right-2 top-2 text-green-500" />
-                    )}
-                </div>
-                <div className="relative">
-                    <TextInput
-                        id="phone"
-                        label="Phone"
-                        value={orderProfile.phone}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'phone')}
-                        onFocus={() => handleFocus('phone')}
-                    />
-                    {focusedField === 'phone' && orderProfile.phone && (
-                        <FaCheck className="absolute right-2 top-2 text-green-500" />
-                    )}
-                </div>
-                <div className="relative">
-                    <TextInput
-                        id="email"
-                        label="Email"
-                        value={orderProfile.email}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
-                        onFocus={() => handleFocus('email')}
-                    />
-                    {focusedField === 'email' && orderProfile.email && (
-                        <FaCheck className="absolute right-2 top-2 text-green-500" />
-                    )}
-                </div>
-                <ActionButton
-                    onClick={() => payNowMutation()}
-                    isLoading={payNowRunning}
-                >
-                    Proceed
-                </ActionButton>
-                {isError && <div className="text-red-500 mt-3 text-sm">
-                    {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later"}
-                </div>
-                }
-            </Popup>
+                <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto relative">
+                    <h2 className="text-2xl font-semibold mb-4">Order Profile</h2>
 
+                    <div className="mb-4 relative">
+                        <TextInput
+                            id="name"
+                            label="Name"
+                            value={orderProfile.name}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'name')}
+                            onFocus={() => handleFocus('name')}
+                        />
+                        {focusedField === 'name' && orderProfile.name && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+
+                    <div className="mb-4 relative">
+                        <TextInput
+                            id="phone"
+                            label="Phone"
+                            value={orderProfile.phone}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'phone')}
+                            onFocus={() => handleFocus('phone')}
+                        />
+                        {focusedField === 'phone' && orderProfile.phone && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+
+                    <div className="mb-6 relative">
+                        <TextInput
+                            id="email"
+                            label="Email"
+                            value={orderProfile.email}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, 'email')}
+                            onFocus={() => handleFocus('email')}
+                        />
+                        {focusedField === 'email' && orderProfile.email && (
+                            <FaCheck className="absolute right-2 top-2 text-green-500" />
+                        )}
+                    </div>
+
+                    <ActionButton
+                        onClick={() => payNowMutation()}
+                        isLoading={payNowRunning}
+                    >
+                        Proceed
+                    </ActionButton>
+
+                    {isError && (
+                        <div className="text-red-500 mt-3 text-sm">
+                            {error?.response?.data?.context?.ERROR || "Payment Failed. Please try Again later"}
+                        </div>
+                    )}
+                </div>
+            </Popup>
             <Popup modal open={modalOpen} onClose={() => setModalOpen(false)} closeOnDocumentClick>
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative">
