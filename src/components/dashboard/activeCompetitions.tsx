@@ -17,7 +17,7 @@ export const ActiveCompetitions: React.FC = () => {
                                 {competition.name}
                             </div>
                             <div className="text-center text-sm text-gray-900 mb-4">
-                                Registraion starts from {format(Date.parse(competition.reg_start_dt), 'iiii, dd MMMM yyyy')}
+                                Examination Fee: ₹{competition.primary_price/100}
                             </div>
                             <ChampionshipExamPurchase competition={competition} />
                         </div>
