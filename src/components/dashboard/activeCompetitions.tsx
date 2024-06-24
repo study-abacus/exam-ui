@@ -1,5 +1,4 @@
 import React from 'react'
-import { format } from 'date-fns'
 import { listChampionships } from '~/api/endpoints/championships'
 import { ChampionshipExamPurchase } from '~/components/dashboard/championshipExamPurchase'
 
