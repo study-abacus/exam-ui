@@ -17,35 +17,38 @@ export const Component: React.FC = () => {
           </div>
         </div>
         <div className="md:basis-1/2 mt-5 md:mt-0">
-          <div className="grid grid-cols-6 gap-4 justify-items-center text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
-            <QuestionPill />
+          <div className="text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl p-5">
+            <div className="text-2xl font-bold mb-4">Questions (0/80)</div>
+            <div className="grid grid-cols-6 gap-4 justify-items-center ">
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+              <QuestionPill />
+            </div>
           </div>
         </div>
       </div>
