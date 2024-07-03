@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import React from "react";
 import { getExamination } from "~/api/endpoints/examinations";
 import { Loading } from "../loading";
+import { Link } from "react-router-dom";
 
 
 type Props = {
@@ -28,16 +29,16 @@ export const ExaminationRow: React.FC<Props> = ({
                 </div>
                 <div className="flex justify-end items-center">
                     <div>
-                        <button
-                            disabled
+                        <Link
+                            to={`/examination/${examination?.id}`}
                             type="button"
                             className="py-3 px-4 inline-flex items-center gap-x-2
                                             text-sm font-semibold rounded-lg border
                                             border-transparent bg-blue-600 text-white
                                             hover:bg-blue-700 disabled:opacity-50
                                             disabled:pointer-events-none">
-                            Start Exam
-                        </button>
+                            View
+                        </Link>
                     </div>
                 </div>
             </div>

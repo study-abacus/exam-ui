@@ -6,7 +6,6 @@ import {
 import { WithNavbar } from "~/layouts/withNavbar.tsx";
 import { WithAuthentication } from "~/layouts/withAuthentication.tsx";
 import { AuthProvider } from "~/hooks/useAuth.tsx";
-import { WithTimer } from "~/layouts/withTimer.tsx";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,12 +26,10 @@ export const router = createBrowserRouter(
             lazy={() => import("./pages/examination.tsx")}
           />
         </Route>
-        <Route element={<WithTimer />}>
-          <Route
-            path="/examination/:examination_id/attempt"
-            lazy={() => import("./pages/attempt.tsx")}
-          />
-        </Route>
+        <Route
+          path="/examination/:examination_id/attempt"
+          lazy={() => import("./pages/attempt.tsx")}
+        />
       </Route>
     </Route>
   )

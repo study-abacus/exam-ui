@@ -5,9 +5,10 @@ import { getTimeDiffrenceForTimer } from '~/utils/time'
 type Props = {
   to?: number
   from?: number
+  afterEnds?: React.ReactNode
 }
 
-export const Timer: React.FC<Props> = ({ to, from }) => {
+export const Timer: React.FC<Props> = ({ to, from, afterEnds }) => {
   const [diff, setDiff] = useState({
     days: "00",
     hours: "00",
@@ -26,6 +27,10 @@ export const Timer: React.FC<Props> = ({ to, from }) => {
 
     return () => clearInterval(interval);
   })
+
+  if (to && afterEnds && Date.now() > to) {
+    return <>{afterEnds}</>;
+  }
 
   return (
     <div className="flex flex-row gap-4 items-center relative">
