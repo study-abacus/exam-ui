@@ -30,22 +30,28 @@ export const Component: React.FC = () => {
                 </div>
               </div>
               <div className="basis-1 mt-3 md:mt-0 basis-1/4 flex flex-row justify-end">
-                <Timer
-                  to={Date.parse(examination.exam_start_dt)}
-                  afterEnds={
-                    <Link
-                      to={`/examination/${examination.id}/attempt`}
-                      type="button"
-                      className="py-3 px-4 inline-flex items-center gap-x-2
-                                            text-sm font-semibold rounded-lg border
-                                            border-transparent bg-blue-600 text-white
-                                            hover:bg-blue-700 disabled:opacity-50
-                                            disabled:pointer-events-none"
-                    >
-                      Start Examination
-                    </Link>
-                  }
-                />
+                {examination?.is_submitted ? (
+                  <div className="font-semibold text-green-500">
+                    Examination Submitted
+                  </div>
+                ) : (
+                  <Timer
+                    to={Date.parse(examination.exam_start_dt)}
+                    afterEnds={
+                      <Link
+                        to={`/examination/${examination.id}/attempt`}
+                        type="button"
+                        className="py-3 px-4 inline-flex items-center gap-x-2
+                                              text-sm font-semibold rounded-lg border
+                                              border-transparent bg-blue-600 text-white
+                                              hover:bg-blue-700 disabled:opacity-50
+                                              disabled:pointer-events-none"
+                      >
+                        Start Examination
+                      </Link>
+                    }
+                  />
+                )}
               </div>
             </div>
           )}

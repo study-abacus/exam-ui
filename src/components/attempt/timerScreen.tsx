@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Timer } from "~/components/base/timer";
 import { ActionButton } from "~/components/base/actionButton";
+import { submitExamination } from "~/api/endpoints/examinations";
 
 
 type Props = {
@@ -9,6 +10,12 @@ type Props = {
 };
 
 export const TimerScreen: React.FC<Props> = ({ children, examination }) => {
+  const { mutate, isLoading: isSubmitting } = submitExamination();
+
+  const submit = useCallback(() => {
+    mutate(examination.id);
+  }, [examination])
+
   return (
     <div className="flex flex-col h-screen">
       <div className="">
@@ -24,7 +31,8 @@ export const TimerScreen: React.FC<Props> = ({ children, examination }) => {
                   </div>
                   <div className="my-3">
                     <ActionButton
-                      onClick={() => {}}
+                      onClick={() => submit()}
+                      isLoading={isSubmitting}
                     >
                       Submit
                     </ActionButton>

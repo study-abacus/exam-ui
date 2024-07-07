@@ -6,9 +6,10 @@ import { ActionButton } from "../base/actionButton";
 type Props = {
   examination_id: string;
   question_id: string;
+  onAfterSubmit: () => void;
 };
 
-export const Question: React.FC<Props> = ({ examination_id, question_id }) => {
+export const Question: React.FC<Props> = ({ examination_id, question_id, onAfterSubmit }) => {
   const [answer, setAnswer] = React.useState("");
 
   const { data: question, isLoading } = getQuestion(
@@ -22,6 +23,7 @@ export const Question: React.FC<Props> = ({ examination_id, question_id }) => {
 
   const saveAnswer = useCallback(() => {
     mutate({ answer });
+    onAfterSubmit()
   }, [answer]);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export const Question: React.FC<Props> = ({ examination_id, question_id }) => {
       ></textarea>
       <div className="mt-4 flex flex-row justify-end">
         <ActionButton onClick={saveAnswer} isLoading={isUpdatingAnswer}>
-          Save
+          Save & Next
         </ActionButton>
       </div>
       </div>

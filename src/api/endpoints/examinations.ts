@@ -1,4 +1,5 @@
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom';
 import { client } from '~/api/client'
 
 
@@ -11,3 +12,14 @@ export const getExamination = (examinationId: number) => useQuery(["examinations
   const response = await client.get(`api/v1/examination/${examinationId}/`);
   return response.data;
 })
+
+export const submitExamination = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async (examinationId: string) => {
+      await client.post(`api/v1/examination/${examinationId}/submit/`);
+      navigate(`/examination/${examinationId}`);
+    },
+  });
+}
