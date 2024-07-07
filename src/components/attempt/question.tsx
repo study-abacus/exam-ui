@@ -22,8 +22,11 @@ export const Question: React.FC<Props> = ({ examination_id, question_id, onAfter
   );
 
   const saveAnswer = useCallback(() => {
-    mutate({ answer });
-    onAfterSubmit()
+    mutate({ answer }, {
+      onSuccess: () => {
+        onAfterSubmit()
+      }
+    });
   }, [answer]);
 
   useEffect(() => {
