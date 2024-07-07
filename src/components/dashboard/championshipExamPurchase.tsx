@@ -62,7 +62,7 @@ export const ChampionshipExamPurchase: React.FC<Props> = ({ competition }) => {
         country_code: orderProfile.country_code,
       });
       const cashfree = await load({
-        mode: "sandbox",
+        mode: "production",
       });
       await new Promise((resolve, reject) => {
         const checkoutOptions = {
