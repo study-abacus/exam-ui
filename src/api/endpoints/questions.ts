@@ -24,7 +24,7 @@ export const getQuestion = (examinationId: string, questionId: string) => {
   const navigate = useNavigate();
 
   return useQuery(["questions", examinationId, questionId], async () => {
-    const response = await client.get(`api/v1/questions/${questionId}/`, {
+    const response = await client.get(`api/v1/questions/${questionId}`, {
       params: { examination_id: examinationId },
     });
     return response.data;
