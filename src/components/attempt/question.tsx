@@ -6,10 +6,11 @@ import { ActionButton } from "../base/actionButton";
 type Props = {
   examination_id: string;
   question_id: string;
+  submitText?: string;
   onAfterSubmit: () => void;
 };
 
-export const Question: React.FC<Props> = ({ examination_id, question_id, onAfterSubmit }) => {
+export const Question: React.FC<Props> = ({ examination_id, question_id, submitText, onAfterSubmit }) => {
   const [answer, setAnswer] = React.useState("");
 
   const { data: question, isLoading } = getQuestion(
@@ -48,7 +49,7 @@ export const Question: React.FC<Props> = ({ examination_id, question_id, onAfter
       ></textarea>
       <div className="mt-4 flex flex-row justify-end">
         <ActionButton onClick={saveAnswer} isLoading={isUpdatingAnswer}>
-          Save & Next
+          {submitText || "Save & Next"}
         </ActionButton>
       </div>
       </div>
