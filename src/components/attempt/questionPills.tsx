@@ -13,11 +13,11 @@ export const QuestionPill: React.FC<Props> = ({
   activeQuestionId,
   onClick,
 }) => {
-  const color = !!question.answer
-    ? "bg-green-500"
-    : question?.id === parseInt(activeQuestionId)
+  const color = question?.id === parseInt(activeQuestionId)
     ? "bg-blue-500"
-    : "bg-gray-500";
+    : !!question.answer
+    ? "bg-green-500"
+    :  "bg-gray-500";
 
   return (
     <button onClick={onClick}>
