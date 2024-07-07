@@ -28,9 +28,9 @@ export const Timer: React.FC<Props> = ({ to, from, afterEnds }) => {
     return () => clearInterval(interval);
   })
 
-  if (to && afterEnds && Date.now() > to) {
+  // if (to && afterEnds && Date.now() > to) {
     return <>{afterEnds}</>;
-  }
+  // }
 
   return (
     <div className="flex flex-row gap-4 items-center relative">

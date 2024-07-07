@@ -13,7 +13,7 @@ export const listQuestions = (examinationId: string) => {
     return response.data;
   }, {
     onError(err: AxiosError<any>) {
-      if (err?.response?.data?.app_exception == "ExamSubmitted") {
+      if (["ExaminationNotStarted", "ExamSubmitted"].includes(err?.response?.data?.app_exception)) {
         navigate(`/examination/${examinationId}`);
       }
     },
@@ -30,7 +30,7 @@ export const getQuestion = (examinationId: string, questionId: string) => {
     return response.data;
   }, {
     onError(err: AxiosError<any>) {
-      if (err?.response?.data?.app_exception == "ExamSubmitted") {
+      if (["ExaminationNotStarted", "ExamSubmitted"].includes(err?.response?.data?.app_exception)) {
         navigate(`/examination/${examinationId}`);
       }
     }
@@ -60,7 +60,7 @@ export const answerQuestion = (examinationId: string, questionId: string) => {
       queryClient.invalidateQueries(["questions", examinationId, questionId]);
     },
     onError(err: AxiosError<any>) {
-      if (err?.response?.data?.app_exception == "ExamSubmitted") {
+      if (["ExaminationNotStarted", "ExamSubmitted"].includes(err?.response?.data?.app_exception)) {
         navigate(`/examination/${examinationId}`);
       }
     },
