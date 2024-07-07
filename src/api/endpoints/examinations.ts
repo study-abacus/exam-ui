@@ -18,7 +18,7 @@ export const submitExamination = () => {
 
   return useMutation({
     mutationFn: async (examinationId: string) => {
-      await client.post(`api/v1/examination/${examinationId}/submit/`);
+      await client.post(`api/v1/examination/${examinationId}/submit`);
       navigate(`/examination/${examinationId}`);
     },
   });
