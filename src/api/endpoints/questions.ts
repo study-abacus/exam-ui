@@ -47,7 +47,7 @@ export const answerQuestion = (examinationId: string, questionId: string) => {
   return useMutation({
     mutationFn: async (data: AnswerQuestionParams) => {
       const response = await client.put(
-        `api/v1/questions/${questionId}/`,
+        `api/v1/questions/${questionId}`,
         { answer: data.answer },
         {
           params: { examination_id: examinationId },
