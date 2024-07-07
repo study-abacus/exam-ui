@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { getExamination } from "~/api/endpoints/examinations";
 import { listQuestions } from "~/api/endpoints/questions";
@@ -17,6 +17,7 @@ export const Component: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeQuestionId = searchParams.get("question_id");
+
   const nextQuestionId = useMemo(() => {
     const currentIndex = questions?.findIndex(
       (question) => question.id === parseInt(activeQuestionId)
@@ -24,8 +25,13 @@ export const Component: React.FC = () => {
 
     if (!questions || currentIndex >= questions.length) return null
 
-    return questions[currentIndex + 1].id
+    return questions[currentIndex + 1]?.id
   }, [questions, activeQuestionId])
+  const onSaveAndNext = useCallback(() => {
+    if (nextQuestionId){
+      setSearchParams({ question_id: nextQuestionId })
+    }
+  }, [nextQuestionId])
 
   return isLoadingExamination ? <Loading /> : (
     <TimerScreen examination={examination}>
@@ -36,7 +42,7 @@ export const Component: React.FC = () => {
               {!!questions?.length && <Question 
                 examination_id={examination_id}
                 question_id={activeQuestionId || questions[0].id}
-                onAfterSubmit={() => { setSearchParams({ question_id: nextQuestionId }) }}
+                onAfterSubmit={onSaveAndNext}
               />}
             </div>
           </div>
