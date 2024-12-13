@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
               <Link className="flex-shrink-0 bg-white" to="/">
                 <img
                   className="h-12"
-                  src="https://studyabacus.com/admin/assets/images/logo/1684778226Abacus.png"
+                  src="https://studyabacus.com/wp-content/uploads/2024/11/l2new.png"
                   alt="Workflow"
                 />
               </Link>
