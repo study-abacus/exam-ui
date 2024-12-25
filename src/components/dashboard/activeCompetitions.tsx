@@ -18,7 +18,7 @@ export const ActiveCompetitions: React.FC = () => {
                             {/* <div className="text-center text-sm text-gray-900 mb-4">
                                 Examination Fee: ₹{competition.primary_price/100}
                             </div> */}
-                            <ChampionshipExamPurchase competition={competition} />
+                            {/* <ChampionshipExamPurchase competition={competition} /> */}
                         </div>
                     ))}
                 </div>
