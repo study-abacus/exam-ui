@@ -1,6 +1,6 @@
 import React from 'react'
 import { listChampionships } from '~/api/endpoints/championships'
-import { ChampionshipExamPurchase } from '~/components/dashboard/championshipExamPurchase'
+// import { ChampionshipExamPurchase } from '~/components/dashboard/championshipExamPurchase'
 
 
 export const ActiveCompetitions: React.FC = () => {
