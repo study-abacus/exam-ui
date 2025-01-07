@@ -38,20 +38,31 @@ export const Question: React.FC<Props> = ({ examination_id, question_id, submitT
     <Loading />
   ) : (
     <div className="text-xl font-bold">
-      {question.title}
-      <textarea
-        id="message"
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-        rows={4}
-        className="mt-3 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Write your answer here..."
-      ></textarea>
+      <div className="text-3xl">
+        {question.title}
+      </div>
+      {question.questype === "number" ? (
+        <input
+          type="number"
+          id="message"
+          value={answer}
+          className="mt-3 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          onChange={(e) => setAnswer(e.target.value)} />
+      ) : (
+        <textarea
+          id="message"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          rows={4}
+          className="mt-3 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Write your answer here..."
+        ></textarea>
+      )}
       <div className="mt-4 flex flex-row justify-end">
         <ActionButton onClick={saveAnswer} isLoading={isUpdatingAnswer}>
           {submitText || "Save & Next"}
         </ActionButton>
       </div>
-      </div>
+    </div>
   );
 };
