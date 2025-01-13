@@ -28,7 +28,7 @@ export const AdmitCardLogin: React.FC = () => {
             <div>
               <TextInput
                 id="roll_number"
-                label="Roll Number"
+                label="Username"
                 value={loginForm.roll_number}
                 onChange={(e) =>
                   setLoginForm((_) => ({ ..._, roll_number: e.target.value }))
